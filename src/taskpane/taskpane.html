@@ -26,53 +26,95 @@
         <img width="180" height="40" src="../../assets/Hollis_logo.png" alt="Hollis_Logo" title="Hollis Logo" />
     </header>
 
-    <main>
+    <main id="app-body" class="ms-welcome__main">
         <form id="searchJobNo" name="searchJobNo">
-            <div>
-                <label>Date</label>
-                <input type="date" required />
-            </div>   
 
-            <div>
-                <label>Project Type</label>  
-                <div>
+            <div class="ms-TextField-Container">
+                <label class="ms-Label">Date</label>
+                <input class="ms-TextField-field event-date" type="date" required />
+            </div>   
+            <div class="project-type">  
+                <label class="ms-Label">Project Type</label>  
+                <div class="toggle-group">  
                     <button type="button" class="toggle-btn active" data-value="client">Client</button>  
                     <button type="button" class="toggle-btn" data-value="internal">Internal</button>  
                 </div>    
             </div>  
+                <!-- <div class="ms-TextField-Container">
+                    <label class="ms-Label" for="project">Project</label>
+                    <input list="projectList" id="projectInput" class="ms-TextField-field" placeholder="Select...">
+                    <datalist id="projectList"></datalist>
+                </div>
+                
+                <div class="ms-TextField-Container">
+                    <label class="ms-Label">Project Task</label>
+                    <input list="projectsTasks" id="projectTaskInput" class="ms-TextField-field" placeholder="Select..." required disabled>
+                    <datalist id="projectsTasks"></datalist>
+                </div> -->
 
-            <div>
-                <label>Project</label>
-                <input id="projectInput" list="projectList" required />
-                <datalist id="projectList"></datalist>
-            </div>
+                <!-- <div class="ms-TextField-Container">
+                    <label class="ms-Label" for="project">Project</label>
+                    <select id="projectInput" class="ms-TextField-field" required>
+                        <option value="">Select...</option>
+                    </select>
+                </div>
+                
+                <div class="ms-TextField-Container">
+                    <label class="ms-Label">Project Task</label>
+                    <select id="projectTaskInput" class="ms-TextField-field" required disabled>
+                        <option value="">Select...</option>
+                    </select>
+                </div> -->
+                <!-- <div class="ms-TextField-Container">
+                    <label class="ms-Label" for="projectInput">Project</label>
+                    <select id="projectInput" class="ms-TextField-field" required>
+                      <option value="">Select...</option>
+                    </select>
+                  </div>
+                                  
+                  <div class="ms-TextField-Container">
+                    <label class="ms-Label">Project Task</label>
+                    <select id="projectTaskInput" class="ms-TextField-field" required disabled>
+                      <option value="">Select...</option>
+                    </select>
+                  </div> -->
 
-            <div>
-                <label>Project Task</label>
-                <input id="projectTaskInput" list="projectTaskList" required disabled />
-                <datalist id="projectTaskList"></datalist>
-            </div>
-
-            <div>
-                <label>Duration</label>
-                <input type="number" required />
+                  <div class="ms-TextField-Container">
+                    <label class="ms-Label" for="projectInput">Project</label>
+                    <input id="projectInput" class="ms-TextField-field" list="projectList" required />
+                    <datalist id="projectList"></datalist>
+                  </div>
+                  
+                  <div class="ms-TextField-Container">
+                    <label class="ms-Label">Project Task</label>
+                    <input id="projectTaskInput" class="ms-TextField-field" list="projectTaskList" required disabled />
+                    <datalist id="projectTaskList"></datalist>
+                  </div>
+                  
+                  
+                  
+            <div class="ms-TextField-Container">
+                <label class="ms-Label">Duration</label>
+                <input class="ms-TextField-field event-duration" type="number" required />
             </div>    
-
-            <div>
-                <label>Description</label>
+            <div class="ms-TextField-Container">
+                <label class="ms-Label">Description</label>
                 <div class="description-field"></div>
             </div> 
-
-            <!-- React Combobox Component -->
-            <div id="react-combobox"></div>
+            
         </form>
-
         <br />
-        <div>
-            <button id="insertTimeEntry">Insert Time Entry</button>
-            <button id="closePane">Close</button>
+        <div class="actnbtn_container">
+            <div class="ui mini button clear-filters" id="insertTimeEntry">Insert Time Entry</div>
+            <div class="ui mini button clear-filters" id="closePane">Close</div>
         </div>
+        <div id="message" class="ms-welcome__action"></div>
+        <!-- React Combobox Component -->
+        <div id="react-combobox"></div>
     </main>
+
+
+   
 
     <!-- React + Fluent UI Component -->
     <script>
