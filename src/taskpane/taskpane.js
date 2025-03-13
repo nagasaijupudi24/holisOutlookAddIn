@@ -496,3 +496,99 @@ document.getElementById("insertTimeEntry").addEventListener("click",getFieldValu
 //   .then((response) => response.json())
 //   .then((d) => console.log(d));
 
+try {
+  const { initializeIcons, ComboBox } = FluentUIReact;
+
+  initializeIcons(); // Initialize Fluent UI icons
+
+  const ComboBoxComponent = () => {
+      const comboBoxRef = React.useRef(null);
+
+      const allOptions = [
+          { key: "Cat", text: "Cat" },
+          { key: "Dog", text: "Dog" },
+          { key: "Fish", text: "Fish" },
+          { key: "Hamster", text: "Hamster" },
+          { key: "Snake", text: "Snake" },
+      ];
+
+      const [options, setOptions] = React.useState(allOptions);
+      console.log(options)
+      const [selectedKey, setSelectedKey] = React.useState(null);
+
+      React.useEffect(() => {
+        const fetchProjects = async () => {
+          try {
+            const response = await fetch(
+              "https://hollis-projectops-dev-01.api.crm4.dynamics.com/api/data/v9.2/msdyn_projects?$select=msdyn_subject,msdyn_projectid&$top=20",
+              {
+                method: "GET",
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+    
+            if (response.ok) {
+              const data = await response.json();
+              console.log("Projects data retrieved successfully:", data);
+    
+              const projectOptions = data.value.map((project) => ({
+                key: project.msdyn_projectid,
+                text: project.msdyn_subject,
+              }));
+    
+              setOptions(projectOptions);
+            } else {
+              console.error("Failed to fetch projects:", response.statusText);
+            }
+          } catch (error) {
+            console.error("Error fetching projects:", error);
+          }
+        };
+    
+        fetchProjects();
+      }, [token]);
+
+      const onInputChange = (event, newValue) => {
+        console.log(newValue)
+          if (!newValue) {
+              setOptions(allOptions);
+              setTimeout(() => comboBoxRef.current?.focus(true), 100);
+          } else {
+              const filteredOptions = allOptions.filter(opt =>
+                  opt.text.toLowerCase().includes(newValue.toLowerCase())
+              );
+              setOptions(filteredOptions);
+          }
+      };
+
+      return React.createElement(
+          "div",
+          { style: { maxWidth: "400px", marginBottom: "20px" } },
+          React.createElement("label", { htmlFor: "petComboBox" }, "Best Pet"),
+          React.createElement(ComboBox, {
+              componentRef: comboBoxRef,
+              id: "petComboBox",
+              label: "Choose a pet",
+              options: options,
+              selectedKey: selectedKey,
+              placeholder: "Select an animal",
+              allowFreeform: true,
+              autoComplete: "on",
+              openOnKeyboardFocus: true, // Ensures dropdown stays visible
+              onClick: () => comboBoxRef.current?.focus(true), // Reopen on click
+              onInputChange: onInputChange,
+              onChange: (event, option) => setSelectedKey(option ? option.key : null), // Handle selection
+          })
+      );
+  };
+
+  ReactDOM.render(
+      React.createElement(ComboBoxComponent),
+      document.getElementById("react-combobox")
+  );
+
+} catch (error) {
+  console.error("Error loading Fluent UI ComboBox:", error);
+}

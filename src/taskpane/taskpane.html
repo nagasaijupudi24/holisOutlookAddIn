@@ -118,64 +118,72 @@
 
     <!-- React + Fluent UI Component -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-    try {
-        const { initializeIcons, ComboBox } = FluentUIReact;
-        
-        initializeIcons(); // Initialize Fluent UI icons
+ 
 
-        const ComboBoxComponent = () => {
-            const [options, setOptions] = React.useState([
-                { key: "Cat", text: "Cat" },
-                { key: "Dog", text: "Dog" },
-                { key: "Fish", text: "Fish" },
-                { key: "Hamster", text: "Hamster" },
-                { key: "Snake", text: "Snake" },
-            ]);
-            const allOptions = [
-                { key: "Cat", text: "Cat" },
-                { key: "Dog", text: "Dog" },
-                { key: "Fish", text: "Fish" },
-                { key: "Hamster", text: "Hamster" },
-                { key: "Snake", text: "Snake" },
-            ];
+ document.addEventListener("DOMContentLoaded", function () {
+    // try {
+    //     const { initializeIcons, ComboBox } = FluentUIReact;
 
-            const onInputChange = (event, newValue) => {
-                if (!newValue) {
-                    setOptions(allOptions);
-                    return;
-                }
-                const filteredOptions = allOptions.filter(opt =>
-                    opt.text.toLowerCase().includes(newValue.toLowerCase())
-                );
-                setOptions(filteredOptions);
-            };
+    //     initializeIcons(); // Initialize Fluent UI icons
 
-            return React.createElement(
-                "div",
-                { style: { maxWidth: "400px", marginBottom: "20px" } },
-                React.createElement("label", { htmlFor: "petComboBox" }, "Best Pet"),
-                React.createElement(ComboBox, {
-                    id: "petComboBox",
-                    label: "Choose a pet",
-                    options: options,
-                    placeholder: "Select an animal",
-                    allowFreeform: true, // Allow manual text entry
-                    autoComplete: "on", // Enable search suggestions
-                    onInputChange: onInputChange, // Handle search filtering
-                })
-            );
-        };
+    //     const ComboBoxComponent = () => {
+    //         const comboBoxRef = React.useRef(null);
 
-        ReactDOM.render(
-            React.createElement(ComboBoxComponent),
-            document.getElementById("react-combobox")
-        );
+    //         const allOptions = [
+    //             { key: "Cat", text: "Cat" },
+    //             { key: "Dog", text: "Dog" },
+    //             { key: "Fish", text: "Fish" },
+    //             { key: "Hamster", text: "Hamster" },
+    //             { key: "Snake", text: "Snake" },
+    //         ];
 
-    } catch (error) {
-        console.error("Error loading Fluent UI ComboBox:", error);
-    }
+    //         const [options, setOptions] = React.useState(allOptions);
+    //         const [selectedKey, setSelectedKey] = React.useState(null);
+
+    //         const onInputChange = (event, newValue) => {
+    //             if (!newValue) {
+    //                 setOptions(allOptions);
+    //                 setTimeout(() => comboBoxRef.current?.focus(true), 100);
+    //             } else {
+    //                 const filteredOptions = allOptions.filter(opt =>
+    //                     opt.text.toLowerCase().includes(newValue.toLowerCase())
+    //                 );
+    //                 setOptions(filteredOptions);
+    //             }
+    //         };
+
+    //         return React.createElement(
+    //             "div",
+    //             { style: { maxWidth: "400px", marginBottom: "20px" } },
+    //             React.createElement("label", { htmlFor: "petComboBox" }, "Best Pet"),
+    //             React.createElement(ComboBox, {
+    //                 componentRef: comboBoxRef,
+    //                 id: "petComboBox",
+    //                 label: "Choose a pet",
+    //                 options: options,
+    //                 selectedKey: selectedKey,
+    //                 placeholder: "Select an animal",
+    //                 allowFreeform: true,
+    //                 autoComplete: "on",
+    //                 openOnKeyboardFocus: true, // Ensures dropdown stays visible
+    //                 onClick: () => comboBoxRef.current?.focus(true), // Reopen on click
+    //                 onInputChange: onInputChange,
+    //                 onChange: (event, option) => setSelectedKey(option ? option.key : null), // Handle selection
+    //             })
+    //         );
+    //     };
+
+    //     ReactDOM.render(
+    //         React.createElement(ComboBoxComponent),
+    //         document.getElementById("react-combobox")
+    //     );
+
+    // } catch (error) {
+    //     console.error("Error loading Fluent UI ComboBox:", error);
+    // }
 });
+
+
 
     </script>
 </body>
