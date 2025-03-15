@@ -68,6 +68,19 @@ function filterOptionsProject() {
   clearBtnProject.style.display = searchInputProject.value ? "inline" : "none";
 }
 
+function filterOptionsTask() {
+  let filter = searchInputTask.value.toLowerCase();
+  let items = dropdownListTask.getElementsByTagName("div");
+
+  for (let i = 0; i < items.length; i++) {
+    let txtValue = items[i].textContent || items[i].innerText;
+    items[i].style.display = txtValue.toLowerCase().includes(filter) ? "" : "none";
+  }
+
+  clearBtnTask.style.display = searchInputTask.value ? "inline" : "none";
+}
+
+
 function showDropdownProject() {
   dropdownListProject.style.display = "block";
   populateDropdown(options);
@@ -79,7 +92,7 @@ function clearInputProject() {
   searchInputProject.value = "";
   filterOptionsProject();
   dropdownListProject.style.display = "none";
-  clearBtnProject.style.display = "none"; // Hide clear button
+  // clearBtnProject.style.display = "none"; // Hide clear button
   dropdownListTask.style.display = "none"; // Hide task dropdown when clearing project
   selectedProjectIdNew = ''
 }
@@ -103,12 +116,21 @@ document.addEventListener("click", function(event) {
 searchInputProject.addEventListener("keyup", filterOptionsProject); // Trigger filter on keyup
 searchInputProject.addEventListener("click", showDropdownProject); // Show dropdown when input is clicked
 clearBtnProject.addEventListener("click", clearInputProject); // Clear input when clear button is clicked
-
+searchInputTask.addEventListener("keyup", filterOptionsTask);
  // Attach the onBlur event to hide the dropdown when focus is lost
  
 searchInputProject.addEventListener("keyup", (event) => {
   const searchTerm = event.target.value;
   fetchMatchingProjects(searchTerm);
+});
+
+
+searchInputProject.addEventListener("blur", (event) => {
+  if (searchInputProject.value === ''){
+     dropdownListProject.style.display = "none"
+
+  }
+
 });
 
 
