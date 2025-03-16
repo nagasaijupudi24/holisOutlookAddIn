@@ -125,13 +125,13 @@ searchInputProject.addEventListener("keyup", (event) => {
 });
 
 
-searchInputProject.addEventListener("blur", (event) => {
-  if (searchInputProject.value === ''){
-     dropdownListProject.style.display = "none"
+// searchInputProject.addEventListener("blur", (event) => {
+//   if (searchInputProject.value === ''){
+//      dropdownListProject.style.display = "none"
 
-  }
+//   }
 
-});
+// });
 
 
 // Populate task dropdown
@@ -165,7 +165,10 @@ function clearInputTask() {
 }
 
 
-searchInputTask.addEventListener("click", () => dropdownListTask.style.display = "block"); // Show task dropdown when clicked
+searchInputTask.addEventListener("click", () => {
+  
+  dropdownListTask.style.display = "block"
+}); // Show task dropdown when clicked
 clearBtnTask.addEventListener("click", clearInputTask); // Clear task input
 
 
@@ -231,7 +234,16 @@ let projectInput = document.getElementById("projectInput");
 Office.onReady(async (info) => {
   if (info.host === Office.HostType.Outlook) {
     // console.log(projectTasksMap);
-
+    document.getElementById("closePane").addEventListener("click", () => {
+      console.log("Close button clicked");
+  
+      if (Office.context && Office.context.ui && Office.context.ui.closeContainer) {
+        Office.context.ui.closeContainer();
+        console.log("Task pane close requested.");
+      } else {
+        console.warn("Office API does not support closing the task pane in this context.");
+      }
+    });
     // Project type toggle
     document.querySelectorAll(".toggle-btn").forEach((button) => {
       button.addEventListener("click", () => {
@@ -246,10 +258,18 @@ Office.onReady(async (info) => {
       createFieldValues();
     });
 
-    // Cancel Button
-    document.getElementById("closePane").addEventListener("click", () => {
-      console.log("Cancel button clicked");
-    });
+    
+//    // Cancel Button
+// document.getElementById("closePane").addEventListener("click", () => {
+//   console.log("Cancel button clicked");
+
+//   if (Office && Office.context && Office.context.ui) {
+//     Office.context.ui.messageParent("close");
+//   } else {
+//     console.warn("Office context not available.");
+//   }
+// });
+
 
     // Show app body
     document.getElementById("app-body").style.display = "flex";
@@ -749,17 +769,28 @@ async function createFieldValues() {
           "Content-Type": "application/json",
           "OData-Version": "4.0",
           "OData-MaxVersion": "4.0",
+         "MSCRM.SuppressDuplicateDetection": false
         },
         body: JSON.stringify(newEntryPayload),
       }
     );
 
+    // Office.context.ui.closeContainer();
+
     if (!response.ok) {
-      throw new Error(`Error creating record: ${response.statusText}`);
+      const errorText = await response.text(); // Capture response even if it's not JSON
+      console.log(JSON.parse(errorText))
+      throw new Error(`Error creating record: ${response.status} ${response.statusText} - ${errorText}`);
+      
     }
 
-    const responseData = await response.json();
-    console.log("Record created successfully!", responseData);
+   // Check if response has content before parsing JSON
+   console.log(response)
+   const verifyData = await response.json();
+console.log("Latest created record:", verifyData);
+ 
+
+ 
   } catch (error) {
     console.error("Error:", error);
   }
