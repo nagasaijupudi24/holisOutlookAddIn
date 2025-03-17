@@ -182,7 +182,7 @@ h2.ms-font-xl {
     border: 1px solid #d1d1d1;
     border-radius: 4px;
     margin-top: 6px;
-    font-size: 13px;
+    font-size: 12px;
     font-family: inherit;
     box-sizing: border-box;
    
@@ -199,6 +199,8 @@ h2.ms-font-xl {
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
     
     user-select: none;
+    font-size: 12px;
+    color: rgb(84, 84, 84);
 }
   
 .toggle-group {  
@@ -263,11 +265,12 @@ textarea.ms-TextField-field {
 .search-input {
     width: 100%;
     padding: 8px;
-    font-size: 14px;
+    /* font-size: 12px; */
     border: 1px solid #ccc;
     border-radius: 4px;
     outline: none;
     padding-right: 30px; /* Space for clear button */
+    color:rgb(84, 84, 84)
 }
 
 .clear-btn {
@@ -296,6 +299,7 @@ textarea.ms-TextField-field {
     display: none;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    font-size: 12px;
 }
 
 .dropdown-list div {

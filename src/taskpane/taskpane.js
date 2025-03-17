@@ -26,16 +26,11 @@ let isPCAInitialized = false;
 let token;
 
 
-///////////////////////////////////////////////////////////////////////////////////////
 let options = [];
 let dropdownListProject = document.getElementById("dropdownListForProject");
 let dropdownListTask = document.getElementById("dropdownListForTask");
 let searchInputProject = document.getElementById("searchInputForProject");
 let searchInputTask = document.getElementById("searchInputForTask");
-let clearBtnProject = document.getElementById("clearBtnForProject");
-let clearBtnTask = document.getElementById("clearBtnForTask");
-
-
 
 // Populate dropdown
 function populateDropdown(options) {
@@ -43,29 +38,29 @@ function populateDropdown(options) {
   options.forEach(option => {
     let div = document.createElement("div");
     div.textContent = option.text;
-    div.id = `${option.value}`
+    div.id = `${option.value}`;
+    div.style.fontSize='12px';
+    div.style.color='rgb(84, 84, 84)'
     div.onclick = function () {
       searchInputProject.value = option.text;
       dropdownListProject.style.display = "none";
-      clearBtnProject.style.display = "inline"; // Show clear button
       fetchProjectTasks(option.value); // Fetch tasks for selected project
-      selectedProjectIdNew = option.value
-      searchInputTask.value = ''
+      selectedProjectIdNew = option.value;
+      searchInputTask.value = '';
     };
     dropdownListProject.appendChild(div);
   });
 }
+
 // Filter project options as user types
 function filterOptionsProject() {
   let filter = searchInputProject.value.toLowerCase();
   let items = dropdownListProject.getElementsByTagName("div");
-
+  
   for (let i = 0; i < items.length; i++) {
     let txtValue = items[i].textContent || items[i].innerText;
     items[i].style.display = txtValue.toLowerCase().includes(filter) ? "" : "none";
   }
-
-  clearBtnProject.style.display = searchInputProject.value ? "inline" : "none";
 }
 
 function filterOptionsTask() {
@@ -76,33 +71,27 @@ function filterOptionsTask() {
     let txtValue = items[i].textContent || items[i].innerText;
     items[i].style.display = txtValue.toLowerCase().includes(filter) ? "" : "none";
   }
-
-  clearBtnTask.style.display = searchInputTask.value ? "inline" : "none";
 }
-
 
 function showDropdownProject() {
   dropdownListProject.style.display = "block";
   populateDropdown(options);
 }
 
-
 // Clear project input
 function clearInputProject() {
   searchInputProject.value = "";
   filterOptionsProject();
   dropdownListProject.style.display = "none";
-  // clearBtnProject.style.display = "none"; // Hide clear button
-  dropdownListTask.style.display = "none"; // Hide task dropdown when clearing project
-  selectedProjectIdNew = ''
+  dropdownListTask.style.display = "none";
+  selectedProjectIdNew = '';
 }
-
 
 // Hide dropdown when clicking outside
 document.addEventListener("click", function(event) {
-    if (!event.target.closest(".dropdown-container")) {
-        dropdownListProject.style.display = "none";
-    }
+  if (!event.target.closest(".dropdown-container")) {
+    dropdownListProject.style.display = "none";
+  }
 });
 
 // Hide dropdown when clicking outside
@@ -115,44 +104,28 @@ document.addEventListener("click", function(event) {
 // Event listener bindings
 searchInputProject.addEventListener("keyup", filterOptionsProject); // Trigger filter on keyup
 searchInputProject.addEventListener("click", showDropdownProject); // Show dropdown when input is clicked
-clearBtnProject.addEventListener("click", clearInputProject); // Clear input when clear button is clicked
 searchInputTask.addEventListener("keyup", filterOptionsTask);
- // Attach the onBlur event to hide the dropdown when focus is lost
- 
+
 searchInputProject.addEventListener("keyup", (event) => {
   const searchTerm = event.target.value;
   fetchMatchingProjects(searchTerm);
 });
 
-
-// searchInputProject.addEventListener("blur", (event) => {
-//   if (searchInputProject.value === ''){
-//      dropdownListProject.style.display = "none"
-
-//   }
-
-// });
-
-
 // Populate task dropdown
 function populateProjectTaskListNew(tasks) {
-  console.log(tasks)
   dropdownListTask.innerHTML = ""; // Clear previous tasks
   tasks.forEach(task => {
     let div = document.createElement("div");
     div.textContent = task.msdyn_subject;
-
+    div.style.fontSize='12px';
+    div.style.color='rgb(84, 84, 84)'
+    div.id = `${task.value}`;
     div.onclick = function () {
-      searchInputTask.value =task.msdyn_subject;
-      
+      searchInputTask.value = task.msdyn_subject;
       dropdownListTask.style.display = "none";
-      clearBtnTask.style.display = "inline"; // Show clear button
-      selectedProjectTaskIdNew = task.msdyn_projecttaskid
-     
+      
+      selectedProjectTaskIdNew = task.msdyn_projecttaskid;
     };
-
-    
-    
     dropdownListTask.appendChild(div);
   });
 }
@@ -161,19 +134,16 @@ function populateProjectTaskListNew(tasks) {
 function clearInputTask() {
   searchInputTask.value = "";
   dropdownListTask.style.display = "none";
-  selectedProjectTaskIdTable = ''
+  selectedProjectTaskIdTable = '';
 }
 
-
 searchInputTask.addEventListener("click", () => {
-  
-  dropdownListTask.style.display = "block"
+  dropdownListTask.style.display = "block";
 }); // Show task dropdown when clicked
-clearBtnTask.addEventListener("click", clearInputTask); // Clear task input
-
 
 // Initialize dropdown options
 populateDropdown(options);
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
