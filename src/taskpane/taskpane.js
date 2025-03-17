@@ -148,53 +148,7 @@ populateDropdown(options);
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-// const $projectDropdown = $("#projectDropdown").selectize({
-//   create: false,
-//   persist: false,
-//   preload: "focus",
-//   maxOptions: 10,
-//   load: function (query, callback) {
-//     if (!query.length) return callback();
-//     fetchMatchingProjects(query)
-//       .then(callback)
-//       .catch(() => callback());
-//   },
-// }); // Initialize Selectize
-// let selectizeInstance = $projectDropdown[0].selectize;
 
-// const $projectTaskDropdown = $("#projectTaskDropdown").selectize(); // Initialize Selectize
-// selectizeInstance.settings.maxOptions = 20;
-// let selectTaskizeInstance = $projectTaskDropdown[0].selectize;
-
-// selectTaskizeInstance.on("change", function () {
-//   const selectedValue = selectTaskizeInstance.getValue();
-//   selectedProjectTaskIdTable = selectedValue;
-//   // Find the selected option by value in the dropdown list
-//   const selectedOption = $projectTaskDropdown.find(`option[value="${selectedValue}"]`)[0];
-
-//   // Retrieve the text of the selected option
-//   const selectedText = selectedOption ? selectedOption.textContent : "";
-
-//   // console.log("Selected Project Task ID:", selectedValue);
-//   // console.log("Selected Project Task Text:", selectedText);
-
-//   fetchMatchingProjects(selectedText);
-// });
-
-// selectizeInstance.on("change", function () {
-//   const selectedValue = selectizeInstance.getValue();
-//   selectedProjectIdTable = selectedValue;
-//   // Find the selected option by value in the dropdown list
-//   const selectedOption = $projectDropdown.find(`option[value="${selectedValue}"]`)[0];
-
-//   // Retrieve the text of the selected option
-//   const selectedText = selectedOption ? selectedOption.textContent : "";
-
-//   // console.log("Selected Project ID:", selectedValue);
-//   // console.log("Selected Project Text:", selectedText);
-
-//   fetchMatchingProjects(selectedText);
-// });
 
 let projectnameArray = [];
 let projectTaskArr = [];
@@ -229,16 +183,7 @@ Office.onReady(async (info) => {
     });
 
     
-//    // Cancel Button
-// document.getElementById("closePane").addEventListener("click", () => {
-//   console.log("Cancel button clicked");
 
-//   if (Office && Office.context && Office.context.ui) {
-//     Office.context.ui.messageParent("close");
-//   } else {
-//     console.warn("Office context not available.");
-//   }
-// });
 
 
     // Show app body
@@ -395,9 +340,9 @@ const fetchMatchingProjects = async (searchTerm) => {
 
     // Populate projectInput datalist
 
-    // selectizeInstance.clearOptions();
+
     projectsData.value.forEach((project) => {
-      // selectizeInstance.addOption({ value: project.msdyn_projectid, text: project.msdyn_subject });
+     
     });
 
     // Refresh dropdown
@@ -486,22 +431,14 @@ const populateProjectTaskList = (filteredKeys) => {
   if (Array.isArray(filteredKeys.value) && filteredKeys.value.length > 0) {
     // Clear existing options in selectTaskizeInstance
     
-      // selectTaskizeInstance.clearOptions();
+    
 
       // Add options dynamically
       filteredKeys.value.forEach((project) => {
-        // console.log({
-        //   value: project.msdyn_projecttaskid, // Set the option value
-        //   text: project.msdyn_subject // Set the option display text
-        // })
-        // selectTaskizeInstance.addOption({
-        //   value: project.msdyn_projecttaskid, // Set the option value
-        //   text: project.msdyn_subject, // Set the option display text
-        // });
+       
       });
 
       // After adding all options, refresh the dropdown
-      // selectTaskizeInstance.refreshOptions(false);
     
   } else {
     console.error("filteredKeys is either not an array or it's empty.");
@@ -638,11 +575,11 @@ async function signInUser() {
       projectsData.value.forEach((project) => {
         let optionObj = { value: project.msdyn_projectid, text: project.msdyn_subject };
         // console.log(optionObj)
-        // selectizeInstance.addOption(optionObj);
+
       });
 
       // Refresh dropdown
-      // selectizeInstance.refreshOptions(false);/
+     
 
       if (projectsData.value.length > 0) {
         // console.log(`Number of projects retrieved: ${projectsData.value.length}`);
@@ -685,8 +622,7 @@ async function createFieldValues() {
   // Log the selected project type
   // console.log("Selected Project Type:", projectType);
 
-  let projectElement = document.getElementById("projectInput");
-  let projectTaskElement = document.getElementById("projectTaskInput");
+  
   let durationElement = document.querySelector(".event-duration");
   let descriptionElement = document.querySelector(".description-field");
 
@@ -766,14 +702,3 @@ console.log("Latest created record:", verifyData);
   }
 }
 
-
-
-
-
-// selectizeInstance.on("type", function () {
-//   selectTaskizeInstance.clearOptions();
-//   const userInput = selectizeInstance.$control_input.val(); // Get the value directly from the input field
-//   // console.log("User is typing:", userInput); // Log the value being typed
-//   // Call fetchMatchingProjects and pass userInput as the searchTerm
-//   fetchMatchingProjects(userInput);
-// });
